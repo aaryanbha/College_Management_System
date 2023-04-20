@@ -98,7 +98,7 @@ class Body extends StatelessWidget{
         ),
          Row(
            children: [
-             Container(
+             Container(9
                margin: EdgeInsets.all(2),
                decoration: BoxDecoration(
                    borderRadius: BorderRadius.only(
