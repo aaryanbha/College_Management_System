@@ -1,35 +1,60 @@
+import 'package:college_management_system/higher_studies_and_future_goals.dart';
+import 'package:college_management_system/placement_section.dart';
+import 'package:college_management_system/student_exam_section.dart';
+import 'package:college_management_system/login.dart';
+// import 'package:college_management_system/placement_records.dart' as placement_section;
 import 'package:college_management_system/widgets/circlebuttom.dart';
 import 'package:college_management_system/widgets/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:college_management_system/portfolio.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'courseDetails.dart';
+
 
 import 'constants/color.dart';
 import 'models/category.dart';
 
-class DashBoard extends StatelessWidget{
+class DashBoard extends StatefulWidget{
+
+  @override
+  State<DashBoard> createState() => _DashBoardState();
+}
+
+class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        body: Column(
-          children: const [
-            AppBar(),
-            Body(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: const [
+              AppBar(),
+              SizedBox(height: 15,),
+              Body(
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class AppBar extends StatelessWidget {
+class AppBar extends StatefulWidget {
   const AppBar({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<AppBar> createState() => _AppBarState();
+}
+
+class _AppBarState extends State<AppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,8 +71,8 @@ class AppBar extends StatelessWidget {
           end: Alignment.bottomRight,
           stops: [0.1, 0.5],
           colors: [
-            Color(0xFF456DBD),
-            Color(0xFF456DBD),
+            Color(0xFF3778FF),
+            Color(0xFF3778FF),
           ],
         ),
       ),
@@ -57,12 +82,131 @@ class AppBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Hello,\nGood Morning",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleLarge,
+              CircleButton(icon: Icons.menu,
+                  onPressed: () {
+                Drawer(
+                  child: Container(
+                    color: Colors.white,
+                    child: ListView(
+                      children: [
+                        DrawerHeader(
+                            padding: EdgeInsets.zero,
+                            child: Container(
+                              // color: Colors.white,
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(radius: 40,
+                                    backgroundImage: NetworkImage('https://cdn.britannica.com/30/182830-050-96F2ED76/Chris-Evans-title-character-Joe-Johnston-Captain.jpg'),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Ayush Yadav', style: TextStyle(
+                                          color: Color(0xFF3778FF),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),),
+
+                                      Text('ayushy.ic@nitj.ac.in', style: TextStyle(
+                                          color: Color(0xFF3778FF),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.folder),
+                          title: Text('My Files', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.edit),
+                          title: Text("Edit Profile", style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.contact_mail),
+                          title: Text("Contact Information", style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.group),
+                          title: Text('Shared with Me', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.star),
+                          title: Text('Starred', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.delete),
+                          title: Text('Trash', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.upload),
+                          title: Text('Uploads', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.settings),
+                          title: Text("Settings", style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.share),
+                          title: Text('Share', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.info),
+                          title: Text("About App", style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.logout),
+                          title: Text('Logout', style: TextStyle(
+                            color: Color(0xFF3778FF),
+                          ),),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+
+              }),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  "Emma, Welcome Back!!",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge,
+                ),
               ),
               CircleButton(
                 icon: Icons.notifications,
@@ -81,166 +225,386 @@ class AppBar extends StatelessWidget {
 }
 class Body extends StatelessWidget{
   const Body({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         // announcement slider
-        Row(
-          children: [
-            Text('Annoucments',style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold),),
-          ],
+        SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.only(left: 25),
+          child: Row(
+            children: [
+              Text('Annoucments',style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold),),
+            ],
+          ),
         ),
         // sized box for gap
         SizedBox(
-          height: 20,
+          height: 15,
         ),
-         Row(
-           children: [
-             Container(9
-               margin: EdgeInsets.all(2),
-               decoration: BoxDecoration(
-                   borderRadius: BorderRadius.only(
-                     bottomRight: Radius.circular(40),
-                     bottomLeft: Radius.circular(40),
-                   )
-               ),
-               child: Row(
-                 children: [
-                   // image
-                   Container(
-                     width: 100,
-                     height: 100,
-                     decoration: BoxDecoration(
-                         image: DecorationImage(image: AssetImage('assets/images/student_profile.jpeg'),fit:BoxFit.cover)
-                     ),
-                   ),
-                   SizedBox(
-                     width: 10,
-                   ),
-                   Container(
-                     width: 80,
-                     height: 100,
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       // mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Text('TECHNITI',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                         Text('2022',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                         TextButton(onPressed: (){
 
-                         },
-                             child: Text('Click here',style: TextStyle(fontSize: 14),),
+         Padding(
+           padding: const EdgeInsets.only(left: 25),
+           child: SingleChildScrollView(
+             scrollDirection: Axis.horizontal,
+             child: Row(
+               children: [
+                 Container(
+                   margin: EdgeInsets.all(2),
+                   decoration: BoxDecoration(
+                       borderRadius: BorderRadius.only(
+                         bottomRight: Radius.circular(40),
+                         bottomLeft: Radius.circular(40),
+                       )
+                   ),
+                   child: Row(
+                     children: [
+                       // image
+                       InkWell(
+                         onTap: () => launchUrlString('https://spice-nitj.web.app/#new_event'),
+                         child: Container(
+                           width: 300,
+                           height: 100,
+                           decoration: BoxDecoration(
+                               image:
+                               DecorationImage(
+                                   image: AssetImage('assets/images/slider_post_1.png'),
+                                   fit:BoxFit.cover),
+                             borderRadius: BorderRadius.circular(20),
+                           ),
+                         ),
+                       ),
 
-                         )
-                       ],
-                     ),
+                       SizedBox(
+                         width: 10,
+                       ),
+
+                       InkWell(
+                         onTap: () => launchUrlString('https://www.nitj.ac.in/'),
+                         child: Container(
+                           width: 300,
+                           height: 100,
+                           decoration: BoxDecoration(
+                               image: DecorationImage(
+                                   image: AssetImage('assets/images/slider_post_2.png'),
+                                   fit:BoxFit.cover),
+                             borderRadius: BorderRadius.circular(20),
+                           ),
+                         ),
+                       ),
+                       // Container(
+                       //   width: 80,
+                       //   height: 100,
+                       //   child: Column(
+                       //     crossAxisAlignment: CrossAxisAlignment.center,
+                       //     // mainAxisAlignment: MainAxisAlignment.center,
+                       //     children: [
+                       //       Text('TECHNITI',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                       //       Text('2022',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                       //       TextButton(onPressed: (){
+                       //
+                       //       },
+                       //           child: Text('Click here',style: TextStyle(fontSize: 14),),
+                       //
+                       //       )
+                       //     ],
+                       //   ),
+                       // )
+                     ],
                    )
-                 ],
-               )
-             )
-           ],
+                 )
+               ],
+             ),
+           ),
          ),
         // options
-        Container(
-          height: 300,
-          // color: Colors.black,
-          child: GridView(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,),
-            children: [
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.search,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
 
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.notes,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
+        SizedBox(height: 15,),
 
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.assessment,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
 
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.attach_email,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
+        const Padding(
+          padding: EdgeInsets.only(left: 25.0),
+          child: Text(
+            'Features',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 23,
+            ),
+          ),
+        ),
 
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.question_answer,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
 
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(Icons.mark_as_unread,size: 18,color: Colors.white),
-                      backgroundColor: Color(0xFF345FB4),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Welcome',style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20,),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
 
-                ),
+                // color: Colors.black,
+                child: GridView(
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 20, crossAxisSpacing: 20),
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseDetails()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8,
+                                    color: Color(0xFFBBD9F6FA),
+                                    spreadRadius: 8,
+                                    offset: Offset.fromDirection(20.0,0)),
+                              ],
+                              shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3, right: 3),
+                                child: Text("Course Details",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> ExamSection()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                            color: Color(0xFF3778FF),boxShadow: [
+                              BoxShadow(blurRadius: 8, color: Color(0xFFBBD9F6FA), spreadRadius: 8, offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,right: 3),
+                                child: Text("Exam Section",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8, color: Color(0xFFBBD9F6FA), spreadRadius: 8, offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,right: 3),
+                                child: Text("Time Table",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>FutureGoals()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8, color: Color(0xFFBBD9F6FA), spreadRadius: 8, offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3, right: 3),
+                                child: Text("Future Goals and Higher Studies",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PlacementSection()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8, color: Color(0xFFBBD9F6FA), spreadRadius: 8, offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,right: 3),
+                                child: Text("Placement Records and Details",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Portfolio()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8,
+                                    color: Color(0xFFBBD9F6FA),
+                                    spreadRadius: 8,
+                                    offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,right: 3),
+                                child: Text("Resume and Portfolio Corner",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Portfolio()));
+                      },
+                      child: Material(
+                        elevation: 6,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                              color: Color(0xFF3778FF),boxShadow: [
+                                BoxShadow(blurRadius: 8,
+                                    color: Color(0xFFBBD9F6FA),
+                                    spreadRadius: 8,
+                                    offset: Offset.fromDirection(20.0,0)),
+                              ], shape: BoxShape.rectangle),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.home,
+                                  size: 40,
+                                  color: Colors.white),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,right: 3),
+                                child: Text("Hot Events",
+                                  style: TextStyle(color: Colors.grey[200],
+                                      fontSize: 14, fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ),
-            ],
-          )
+            ),
+          ),
         ),
       ],
     );

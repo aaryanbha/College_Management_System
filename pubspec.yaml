@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  carousel_slider: ^4.2.1
+  url_launcher: ^6.1.10
+  table_calendar: ^3.0.9
+  expansion_card: ^0.1.0
+  horizontal_data_table: ^4.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,7 +65,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
+    - assets/images/upload_doc.png
+    - assets/images/slider_post_1.png
+    - assets/images/slider_post_2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
