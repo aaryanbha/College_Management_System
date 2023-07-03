@@ -1,4 +1,4 @@
-# college_management_system
+# College_DataBase_Management 
 
 A new Flutter project.
 
